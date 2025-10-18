@@ -11,11 +11,14 @@ const signupAndGetToken = async () => {
 
 describe('Generation routes', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    // Mock setTimeout to resolve immediately
+    jest.spyOn(global, 'setTimeout').mockImplementation((cb: any) => {
+      cb();
+      return {} as any;
+    });
   });
 
   afterEach(() => {
-    jest.useRealTimers();
     jest.restoreAllMocks();
   });
 
