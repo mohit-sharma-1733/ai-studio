@@ -16,6 +16,8 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
     {
       title: 'Total Generations',
       value: totalGenerations,
+      trend: '+12%',
+      trendColor: 'text-green-600 dark:text-green-400',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
@@ -28,6 +30,8 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
     {
       title: 'Successful',
       value: successfulGenerations,
+      trend: `${totalGenerations > 0 ? Math.round((successfulGenerations / totalGenerations) * 100) : 0}% success`,
+      trendColor: 'text-blue-600 dark:text-blue-400',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -45,6 +49,8 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
         weekAgo.setDate(weekAgo.getDate() - 7);
         return date > weekAgo;
       }).length,
+      trend: 'Active',
+      trendColor: 'text-purple-600 dark:text-purple-400',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -71,9 +77,9 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat, index) => (
-          <div 
-            key={index} 
-            className="card group hover:scale-105 cursor-pointer animate-slideUp"
+          <div
+            key={index}
+            className="card group hover:scale-105 hover:shadow-2xl cursor-pointer animate-slideUp transition-all duration-300"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <div className="flex items-center justify-between">
@@ -81,11 +87,17 @@ const Dashboard: React.FC<DashboardProps> = ({ setActiveTab }) => {
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
                   {stat.title}
                 </p>
-                <p className="text-4xl font-bold text-gray-900 dark:text-white">
+                <p className="text-4xl font-bold text-gray-900 dark:text-white mb-1">
                   {stat.value}
                 </p>
+                <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${stat.trendColor} bg-opacity-10`}>
+                  <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  {stat.trend}
+                </div>
               </div>
-              <div className={`p-4 rounded-2xl ${stat.bgColor} ${stat.textColor} group-hover:scale-110 transition-transform duration-200`}>
+              <div className={`p-4 rounded-2xl ${stat.bgColor} ${stat.textColor} group-hover:scale-110 transition-all duration-200 shadow-lg`}>
                 {stat.icon}
               </div>
             </div>
