@@ -57,7 +57,7 @@ export const insertGeneration = db.prepare(`
 `);
 
 export const getGenerationsByUser = db.prepare<[number, number], Generation>(`
-  SELECT * FROM generations WHERE user_id = ? ORDER BY created_at DESC LIMIT ?
+  SELECT * FROM generations WHERE user_id = ? ORDER BY created_at DESC, id DESC LIMIT ?
 `);
 
 export const getGenerationById = db.prepare<[number], Generation>(`
