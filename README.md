@@ -10,6 +10,8 @@
 
 **A modern AI-powered image generation platform with a beautiful, intuitive interface**
 
+*CI Test - Ready for automated testing*
+
 [🚀 Live Demo](#) • [📖 Documentation](#) • [🐛 Report Bug](https://github.com/mohit-sharma-1733/ai-studio/issues) • [✨ Request Feature](https://github.com/mohit-sharma-1733/ai-studio/issues)
 
 ![AI Studio Preview](./preview.png)
