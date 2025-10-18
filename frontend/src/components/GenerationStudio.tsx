@@ -104,14 +104,15 @@ const GenerationStudio: React.FC<GenerationStudioProps> = ({
         setRetryCount(0);
         if (onSuccess) onSuccess();
       }, 300);
-    } catch (err: any) {
-      if (err.name === 'AbortError' || err.code === 'ERR_CANCELED') {
+    } catch (err) {
+      const error = err as { name?: string; code?: string; response?: { status?: number; data?: { error?: string } } };
+      if (error.name === 'AbortError' || error.code === 'ERR_CANCELED') {
         setError('Generation aborted');
-      } else if (err.response?.status === 503) {
+      } else if (error.response?.status === 503) {
         setError('Model overloaded. Please try again.');
         setRetryCount(prev => prev + 1);
       } else {
-        setError(err.response?.data?.error || 'An error occurred');
+        setError(error.response?.data?.error || 'An error occurred');
       }
     } finally {
       setAbortController(null);
