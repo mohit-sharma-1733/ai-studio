@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: AI Studio API
+  version: 1.0.0
+  description: API for AI Studio web app
+servers:
+  - url: http://localhost:3001
+paths:
+  /auth/signup:
+    post:
+      summary: Sign up a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 6
+              required:
+                - email
+                - password
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '400':
+          description: Bad request
+  /auth/login:
+    post:
+      summary: Log in a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Invalid credentials
+  /generations:
+    post:
+      summary: Create a new generation
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                style:
+                  type: string
+                imageUpload:
+                  type: string
+              required:
+                - prompt
+                - style
+                - imageUpload
+      responses:
+        '201':
+          description: Generation created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  imageUrl:
+                    type: string
+                  prompt:
+                    type: string
+                  style:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  status:
+                    type: string
+        '503':
+          description: Model overloaded
+    get:
+      summary: Get last 5 generations
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 5
+      responses:
+        '200':
+          description: List of generations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    imageUrl:
+                      type: string
+                    prompt:
+                      type: string
+                    style:
+                      type: string
+                    createdAt:
+                      type: string
+                      format: date-time
+                    status:
+                      type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

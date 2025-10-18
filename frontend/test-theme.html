@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen p-8">
+    <h1 class="text-4xl font-bold mb-4">Theme Test</h1>
+    <p class="mb-4">This text should be white on dark background</p>
+    <button onclick="document.documentElement.classList.toggle('dark')" 
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Toggle Theme
+    </button>
+    <div class="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded">
+        <p>This box should change color</p>
+    </div>
+</body>
+</html>
